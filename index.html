@@ -13,14 +13,10 @@
             padding: 0;
         }
         #quote {
-            margin-top: 10px;
+            margin-top: 5px;
             font-size: 5px;
         }
-        #author {
-            font-style: italic;
-            font-weight: bold;
-            margin-top: 20px;
-        }
+        
     </style>
 </head>
 <body>
@@ -88,13 +84,11 @@
         ];
 
         const quoteElement = document.getElementById('quote');
-        const authorElement = document.getElementById('author');
 
         function generateRandomQuote() {
             const randomIndex = Math.floor(Math.random() * quotes.length);
             const randomQuote = quotes[randomIndex];
             quoteElement.textContent = '"' + randomQuote.text + '"';
-            authorElement.textContent = "- " + randomQuote.author;
         }
 
         // Initial quote generation
