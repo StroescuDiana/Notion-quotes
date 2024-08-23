@@ -25,7 +25,6 @@
 </head>
 <body>
     <div id="quote"></div>
-    <div id="author"></div>
 
     <script>
         const quotes = [
@@ -193,20 +192,32 @@
     },
 ];
 
-
         const quoteElement = document.getElementById('quote');
+        let shownQuotes = [];
+        const intervalTime = 86400000 / quotes.length; // Dividing 24 hours by the number of quotes to show them all in one day
 
-        function generateRandomQuote() {
-            const randomIndex = Math.floor(Math.random() * quotes.length);
-            const randomQuote = quotes[randomIndex];
-            quoteElement.textContent = '"' + randomQuote.text + '"';
+        function getNextQuote() {
+            if (shownQuotes.length === quotes.length) {
+                shownQuotes = []; // Reset the shownQuotes after all have been shown
+            }
+
+            let availableQuotes = quotes.filter(quote => !shownQuotes.includes(quote));
+            let nextQuote = availableQuotes[Math.floor(Math.random() * availableQuotes.length)];
+            shownQuotes.push(nextQuote);
+
+            return nextQuote;
+        }
+
+        function displayQuote() {
+            const nextQuote = getNextQuote();
+            quoteElement.textContent = '"' + nextQuote.text + '"';
         }
 
         // Initial quote generation
-        generateRandomQuote();
+        displayQuote();
 
-        // Update the quote every hour
-        setInterval(generateRandomQuote, 3600000); // 3600000 milliseconds = 1 hour
+        // Update the quote at regular intervals so all quotes are shown within a day
+        setInterval(displayQuote, intervalTime);
     </script>
 </body>
 </html>
